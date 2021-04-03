@@ -1,6 +1,6 @@
 import './Header.css'
 
-const header = (props) => {
+const header = () => {
     return (
         <div className="Header">
             <h1>Democratic Playlist App</h1>

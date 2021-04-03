@@ -1,15 +1,28 @@
 import { Component } from 'react';
+
 import './App.css';
-import SpotifyLoginButton from './SpotifyLoginButton/SpotifyLoginButton'
-import Header from './Header/Header'
+import Layout from './UI/Layout/Layout'
+import LoginPage from './components/LoginPage/LoginPage'
+import { Redirect, Route, Switch } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+import PlaylistManagementPage from './components/PlaylistManagementPage/PlaylistManagementPage';
+
 
 class App extends Component {
+
   render() {
+
     return (
       <div className="App">
-        <Header/>
-        <p>You are not logged in. Please login with one of the below services</p>
-        <SpotifyLoginButton/> 
+        <BrowserRouter>
+          <Layout>
+            <Switch>
+              <Route from='/search' component={PlaylistManagementPage}/>
+              <Route from='/login' component={LoginPage}/>
+              <Redirect to='/login'/> 
+            </Switch>
+          </Layout>
+        </BrowserRouter>
       </div>
     );
   }

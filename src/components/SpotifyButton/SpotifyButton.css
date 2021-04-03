@@ -1,8 +1,7 @@
-.SpotifyLoginButton > button {
+.SpotifyButton {
     background-color: #15883e;
     color: #fff;
     text-align: center;
-    display: block;
     margin: 0 auto;
     padding: 16px 14px 18px;
     font-size: 14px;
@@ -11,5 +10,10 @@
     font-weight: 700;
     border: 1px solid transparent;
     border-radius: 500px;
-    min-width: 300px;
+    width: 300px;
+    text-decoration: none;
+}
+
+.SpotifyButton:hover {
+    background-color: #1db954,
 }
