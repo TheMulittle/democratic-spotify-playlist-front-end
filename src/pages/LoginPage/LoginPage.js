@@ -1,5 +1,5 @@
 import React from 'react'
-import SpotifyButton from '../../components/SpotifyButton/SpotifyButton'
+import SpotifyButton from '../../UI/SpotifyButton/SpotifyButton'
 
 const loginPage = (props) => (
     <React.Fragment>

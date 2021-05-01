@@ -1,33 +1,50 @@
-import React, {useState} from 'react'
+import {useState, useEffect} from 'react'
 import axios from '../../axios'
 
-import SpotifyButton from '../../components/SpotifyButton/SpotifyButton'
+import SelectionList from '../../UI/SelectionList/SelectionList'
 
 const PlaylistManagementPage = (props) => {
+    const [collaborativePlaylists, setCollaborativePlaylists] = useState([])
 
-    const [playlistId, setPlaylistId] = useState('');
-    const [message, setMessage] = useState(null);
-    
-    const playlistChangedHandler = (event) => {
-        setPlaylistId(event.target.value)
-    }
+    const defaultImage = "";
 
-    const playlistClickedHandler = () => {
+    useEffect(() => {
+        Promise.all([
+            //axios.get(`${process.env.REACT_APP_API_BASE_URL}/playlist`, {withCredentials: true}),
+            axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/playlist?collaborative=true&&mine=true`, {withCredentials: true}),
+          ]).then(([myPlaylistsResponse]) => {
+                const playlists = myPlaylistsResponse.data.playlists.map(playlist => {
+                    return {
+                        id: playlist.id,
+                        name: playlist.name,
+                        img: playlist.images[0]?.url ?? defaultImage,
+                        selected: false
+                    }
+                })
+                setCollaborativePlaylists(playlists)
+          }).catch((err) => {
+              console.log(err);
+          });
+    }, []);
+
+
+    const playlistClickedHandler = (playlistId) => {
         axios.post(`${process.env.REACT_APP_API_BASE_URL}/playlist`, {playlistId: playlistId}, {withCredentials: true})
-            .then(response => setMessage(response.data.message))
-            .catch(err => setMessage(err.response.data.message))
+            .then(response => {
+                const playlists = [...collaborativePlaylists]
+                const playlist = playlists.find(playlist => playlist.id === playlistId);
+                playlist.selected = true;
+                console.log(playlistId);
+                console.log(playlists);
+                setCollaborativePlaylists(() => playlists);
+            })
+            .catch(err => console.log("Something went wrong"))
     }
-
-    const messageDiv = message ? <div>{message}</div> : null
 
     return (
-        <React.Fragment>
-            <input onChange={playlistChangedHandler} value={playlistId}/>
-            <SpotifyButton clicked={playlistClickedHandler}>Add playlist to be managed</SpotifyButton>
-            {messageDiv}
-            <div hidden>Managed playlists</div>
-            <div hidden>User's collaborative playlists</div>
-        </React.Fragment>
+        <div>
+            <SelectionList items={collaborativePlaylists} playlistClicked={playlistClickedHandler}/>
+        </div>
     )
 }
 
