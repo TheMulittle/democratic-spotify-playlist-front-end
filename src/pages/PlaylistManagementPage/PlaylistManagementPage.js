@@ -23,7 +23,7 @@ const PlaylistManagementPage = (props) => {
                 })
                 setCollaborativePlaylists(playlists)
           }).catch((err) => {
-              console.log(err);
+              console.error(err);
           });
     }, []);
 
@@ -34,11 +34,9 @@ const PlaylistManagementPage = (props) => {
                 const playlists = [...collaborativePlaylists]
                 const playlist = playlists.find(playlist => playlist.id === playlistId);
                 playlist.selected = true;
-                console.log(playlistId);
-                console.log(playlists);
                 setCollaborativePlaylists(() => playlists);
             })
-            .catch(err => console.log("Something went wrong"))
+            .catch(err => console.error("Something went wrong"))
     }
 
     return (

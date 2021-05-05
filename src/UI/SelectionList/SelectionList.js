@@ -12,8 +12,11 @@ const SelectionList = (props) => {
                 highlighted={playlist.selected}
                 key={playlist.id}
                 img={playlist.img}
-                description={playlist.name}
-                clicked={() => props.playlistClicked(playlist.id)}/>
+                clicked={() => props.playlistClicked(playlist.id)}
+                imgWidth={360}
+                imgDescription={playlist.name}>
+                    <p>{playlist.name}</p>
+            </Tile>
         )
     });
 

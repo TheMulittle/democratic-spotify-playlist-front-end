@@ -16,7 +16,11 @@
     border-color: rgba(16, 168, 2, 0.5);
 }
 
-.Description {
+.Tile .Description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
     position: absolute;
     bottom: 0;
 

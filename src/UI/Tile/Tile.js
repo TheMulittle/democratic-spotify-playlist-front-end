@@ -4,13 +4,13 @@ import Cover from '../../UI/Cover/Cover';
 
 const Tile = (props) => {
 
-    const className = "Tile" + `${props.highlighted ? " Highlighted" : ""}`
+    const className = `Tile ${props.highlighted ? " Highlighted" : ""}`
 
     return(
         <div className={className} onClick={props.clicked}>
-            <Cover img={props.img}/>
+            <Cover img={props.img} width={props.imgWidth}/>
             <div className="Description">
-                <p>{props.description}</p>
+                {props.children}
             </div>
         </div>
     ) 
