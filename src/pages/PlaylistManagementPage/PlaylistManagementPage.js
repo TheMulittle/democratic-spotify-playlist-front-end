@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from '../../axios'
 
 import SelectionList from '../../UI/SelectionList/SelectionList'
+import SpotifyButton from "../../UI/SpotifyButton/SpotifyButton";
 
 const PlaylistManagementPage = (props) => {
   const [collaborativePlaylists, setCollaborativePlaylists] = useState([])
@@ -32,23 +33,45 @@ const PlaylistManagementPage = (props) => {
   }, [])
 
   const playlistClickedHandler = (playlistId) => {
+    const playlists = [...collaborativePlaylists]
+    const playlist = playlists.find((playlist) => playlist.id === playlistId)
+
+    if(playlist.selected) {
+      axios
+        .delete(
+          `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`,
+          { withCredentials: true },
+        )
+        .then((response) => {
+          playlist.selected = !playlist.selected
+          setCollaborativePlaylists(() => playlists)
+        })
+        .catch((err) => console.error('Something went wrong'))
+    } else {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`,
+          { withCredentials: true },
+        )
+        .then((response) => {
+          playlist.selected = !playlist.selected
+          setCollaborativePlaylists(() => playlists)
+        })
+        .catch((err) => console.error('Something went wrong'))
+    }
+  }
+
+  const forceReorder = () => {
     axios
       .post(
-        `${process.env.REACT_APP_API_BASE_URL}/playlist`,
-        { playlistId: playlistId },
-        { withCredentials: true },
-      )
-      .then((response) => {
-        const playlists = [...collaborativePlaylists]
-        const playlist = playlists.find((playlist) => playlist.id === playlistId)
-        playlist.selected = true
-        setCollaborativePlaylists(() => playlists)
-      })
-      .catch((err) => console.error('Something went wrong'))
+        `${process.env.REACT_APP_API_BASE_URL}/trigger-reorder`,
+          {withCredentials: true}
+      ).catch((err) => console.error('Error reordering' + err))
   }
 
   return (
     <div>
+      <SpotifyButton children={'Reordenar'} clicked={forceReorder}/>
       <SelectionList items={collaborativePlaylists} playlistClicked={playlistClickedHandler} />
     </div>
   )
