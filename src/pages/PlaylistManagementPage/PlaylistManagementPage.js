@@ -39,8 +39,7 @@ const PlaylistManagementPage = (props) => {
     if(playlist.selected) {
       axios
         .delete(
-          `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`,
-          { withCredentials: true },
+          `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`
         )
         .then((response) => {
           playlist.selected = !playlist.selected
