@@ -35,29 +35,24 @@ const PlaylistManagementPage = (props) => {
   const playlistClickedHandler = (playlistId) => {
     const playlists = [...collaborativePlaylists]
     const playlist = playlists.find((playlist) => playlist.id === playlistId)
-
+    let promiseReturn
     if(playlist.selected) {
-      axios
+      promiseReturn = axios
         .delete(
           `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`
         )
-        .then((response) => {
-          playlist.selected = !playlist.selected
-          setCollaborativePlaylists(() => playlists)
-        })
-        .catch((err) => console.error('Something went wrong'))
     } else {
-      axios
+      promiseReturn = axios
         .post(
           `${process.env.REACT_APP_API_BASE_URL}/playlist/${playlistId}`,
           { withCredentials: true },
         )
-        .then((response) => {
-          playlist.selected = !playlist.selected
-          setCollaborativePlaylists(() => playlists)
-        })
-        .catch((err) => console.error('Something went wrong'))
     }
+    promiseReturn.then((response) => {
+        playlist.selected = !playlist.selected
+        setCollaborativePlaylists(() => playlists)
+      })
+      .catch((err) => console.error('Something went wrong'))
   }
 
   const forceReorder = () => {

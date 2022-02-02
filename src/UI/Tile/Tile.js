@@ -6,7 +6,7 @@ const Tile = (props) => {
   const className = `Tile ${props.highlighted ? ' Highlighted' : ''}`
 
   return (
-    <div className={className} onClick={props.clicked} style={{"cursor":"pointer"}}>
+    <div className={className} onClick={props.clicked}>
       <Cover img={props.img} width={props.imgWidth} />
       <div className="Description">{props.children}</div>
     </div>
