@@ -10,8 +10,7 @@ const PlaylistManagementPage = (props) => {
 
   useEffect(() => {
     Promise.all([
-      //axios.get(`${process.env.REACT_APP_API_BASE_URL}/playlist`, {withCredentials: true}),
-      axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/playlist?collaborative=true&&mine=true`, {
+      axios.get(`${process.env.REACT_APP_API_BASE_URL}/me/playlist?mine=true`, {
         withCredentials: true,
       }),
     ])
