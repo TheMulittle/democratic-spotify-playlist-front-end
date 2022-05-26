@@ -55,7 +55,7 @@ const PlaylistManagementPage = (props) => {
       .catch((err) => console.error('Something went wrong'))
   }
 
-  const forceReorder = () => {
+  const forceReorderClickHandler = () => {
     axios
       .post(
         `${process.env.REACT_APP_API_BASE_URL}/trigger-reorder`,
@@ -65,7 +65,7 @@ const PlaylistManagementPage = (props) => {
 
   return (
     <div>
-      <SpotifyButton children={'Reordenar'} clicked={forceReorder}/>
+      <SpotifyButton children={'Reordenar'} clicked={forceReorderClickHandler}/>
       <SelectionList items={collaborativePlaylists} playlistClicked={playlistClickedHandler} />
     </div>
   )
