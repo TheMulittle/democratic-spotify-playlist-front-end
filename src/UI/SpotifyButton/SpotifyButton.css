@@ -12,6 +12,7 @@
   border-radius: 500px;
   width: 100%;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .SpotifyButton:hover {

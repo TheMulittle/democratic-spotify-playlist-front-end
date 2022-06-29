@@ -6,6 +6,7 @@
   transition: transform 0.5s;
   border: 10px solid transparent;
   border-radius: 5px;
+  cursor: pointer
 }
 
 .Tile:hover {
